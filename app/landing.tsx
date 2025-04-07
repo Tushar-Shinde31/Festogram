@@ -1,9 +1,11 @@
-import { View, Text, Image } from 'react-native'
+import { View, Text, Image, Pressable } from 'react-native'
 import React from 'react'
 import Colors from '@/data/Colors'
 import Button from '@/components/Shared/Button'
+import { useRouter } from 'expo-router'
 
 export default function LandingScreen() {
+  const router = useRouter();
   return (
     <View>
        <Image
@@ -29,14 +31,16 @@ export default function LandingScreen() {
             color: Colors.GRAY,
         }}>Your college news, Updates in your pocket, Join the club, Register for new event and Many More... </Text>
 
-        <Button text='Get Started' onPress={() => console.log('Button Press')}/>
+        <Button text='Get Started' onPress={() => router.push('/(auth)/SignUp')}/>
 
+        <Pressable onPress={() => router.push('/(auth)/SignUp')}>
         <Text style={{
             fontSize: 16,
             textAlign: 'center',
             marginTop: 7,
             color: Colors.GRAY,
         }}>Aleady have an Account? Sign In Here</Text>
+       </Pressable>
        </View>
     </View>
   )
