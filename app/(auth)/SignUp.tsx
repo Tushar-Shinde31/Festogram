@@ -8,6 +8,10 @@ import * as ImagePicker from 'expo-image-picker'
 import { StyleSheet } from 'react-native'
 import { createUserWithEmailAndPassword } from 'firebase/auth'
 import { auth } from '@/configs/Firebase.Config'
+import { upload} from 'cloudinary-react-native'
+import { cld, options } from '@/configs/CloudinaryConfig'
+import axios from 'axios'
+import { router } from 'expo-router'
 
 export default function SignUp() {
   const [profileImage, setProfileImage] = useState<string|undefined>();
@@ -25,7 +29,25 @@ export default function SignUp() {
       .then(async (userCredentials) => {
         console.log(userCredentials);
         // upload Profile Image
-  
+          await upload(cld, {
+            file: profileImage,
+            options: options,
+            callback: async(error: any, response: any) => {
+              if(error){
+                console.log(error);
+              }
+              if(response){
+                console.log(response?.url);
+                const result = await axios.post(process.env.EXPO_PUBLIC_HOST_URL + '/user',{
+                  name: fullName,
+                  email: collegeEmail,
+                  image: response?.url,
+                })
+                console.log(result);
+                router.push('/landing')
+              }
+             }
+          })
         // Save To Database
       })
       .catch((error) => {
