@@ -16,16 +16,16 @@ import { router } from 'expo-router'
 export default function SignUp() {
   const [profileImage, setProfileImage] = useState<string|undefined>();
   const [fullName, setFullName] = useState<string|undefined>();
-  const [collegeEmail, setCollegeEmail] = useState<string|undefined>();
+  const [email, setEmail] = useState<string|undefined>();
   const [password, setPassword] = useState<string|undefined>();
 
   const onBtnPress = () => {
-    if (!collegeEmail || !password || !fullName) {
+    if (!email || !password || !fullName) {
       ToastAndroid.show('Please fill all the fields', ToastAndroid.SHORT);
       return;
     }
   
-    createUserWithEmailAndPassword(auth, collegeEmail, password)
+    createUserWithEmailAndPassword(auth, email, password)
       .then(async (userCredentials) => {
         console.log(userCredentials);
         // upload Profile Image
@@ -38,9 +38,9 @@ export default function SignUp() {
               }
               if(response){
                 console.log(response?.url);
-                const result = await axios.post(process.env.EXPO_PUBLIC_HOST_URL + '/user',{
+                const result = await axios.post(process.env.EXPO_PUBLIC_HOST_URL + "/user",{
                   name: fullName,
-                  email: collegeEmail,
+                  email: email,
                   image: response?.url,
                 })
                 console.log(result);
@@ -101,7 +101,7 @@ export default function SignUp() {
         </View>
 
         <TextInputFeild label='Full Name' onChangeText={(v)=> setFullName(v)}/>
-        <TextInputFeild label='College Email' onChangeText={(v)=> setCollegeEmail(v)}/>
+        <TextInputFeild label='College Email' onChangeText={(v)=> setEmail(v)}/>
         <TextInputFeild label='Password' password={true} onChangeText={(v)=> setPassword(v)}/>
 
           <Button text='Create Account' onPress={()=>onBtnPress()}/>

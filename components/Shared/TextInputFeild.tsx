@@ -4,26 +4,41 @@ import Colors from '@/data/Colors'
 import { StyleSheet } from 'react-native'
 
 type TextInputFeildProps = {
-    label: string,
-    onChangeText: (text: string) => void,
-    password?: boolean,
+  label: string,
+  onChangeText: (text: string) => void,
+  password?: boolean,
 }
-export default function TextInputFeild({label,onChangeText,password=false}: TextInputFeildProps) {
+
+export default function TextInputFeild({ label, onChangeText, password = false }: TextInputFeildProps) {
   return (
-    <View style={{ marginTop: 15}}>
-      <Text style={{color: Colors.GRAY}}>{label}</Text>
-      <TextInput placeholder={label} style={styles.TextInput} secureTextEntry={password} onChangeText={onChangeText}></TextInput>
+    <View style={styles.container}>
+      <Text style={styles.label}>{label}</Text>
+      <TextInput
+        placeholder={label}
+        style={styles.TextInput}
+        secureTextEntry={password}
+        onChangeText={onChangeText}
+      />
     </View>
   )
 }
 
 const styles = StyleSheet.create({
+  container: {
+    marginTop: 15,
+    width: '100%',
+  },
+  label: {
+    color: Colors.GRAY,
+    marginBottom: 5,
+    fontSize: 14,
+  },
   TextInput: {
-    padding: 10,
-    borderWidth: 0.2,
-    borderRadius: 5,
-    marginTop: 5,
-    fontSize: 17,
-
+    width: '100%',
+    padding: 12,
+    borderWidth: 1,
+    borderColor: '#ccc',
+    borderRadius: 8,
+    fontSize: 16,
   }
 })
